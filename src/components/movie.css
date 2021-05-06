@@ -3,14 +3,15 @@
     background-color: rgb(8, 12, 48);
     margin: 1rem;
     border-radius: 3px;
-    box-shadow: 4px 10px 10px rgba(65, 65, 65, 0.6);;
+    box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.6);;
     overflow: hidden;
     position: relative;
     cursor: pointer;
 }
 .movie img{
     max-width: 100%;
-    
+    min-height: 340px;
+    min-width: 220px;
 }
 .movie-info{
     
@@ -32,34 +33,48 @@
     padding: 4px;
     border-radius: 5px;
     background-color: #171150;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .movie-over{
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgb(124, 127, 153) ;
+    background-color: rgb(120, 127, 190) ;
     color: black;
     padding: 1rem;
     overflow: auto;
     max-height: 100%;
-    transform: translateY(102%);
-    transition: all 0.8s;
+    /* transform: translateY(102%); */
+    /* transition: ease-in 0.8s; */
 }
 .movie-over h5{
     margin-top: -10px;
 }
 
-.movie:hover .movie-over{
+/* .movie:hover .movie-over{
     transform: translateY(0%);
     
-}
+} */
 .green{
-    color: #258822 ;
+    color: #34ac30 ;
 }
 .yellow{
     color: #b89e2a ;
 }
 .orange{
     color: #df551e ;
+}
+.bookmark{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 1.5rem;   
+}
+.pencil{
+    position: absolute;
+    top: 40px;
+    right: 6px;
+    font-size: 1.5rem;
+     
 }
