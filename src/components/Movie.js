@@ -1,36 +1,48 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './movie.css'
 // import { RiBookmarkFill } from 'react-icons/ri';
 import {BsFillPlusCircleFill} from 'react-icons/bs';
 import {FcSurvey} from 'react-icons/fc';
 import { motion, AnimatePresence } from "framer-motion"
+import { GlobalContext } from '../hooks/GlobalState';
 
 const image_api="https://image.tmdb.org/t/p/w1280";
 const Movie=(props)=>{
-    // const [saveMovie, setSaveMovie]=useState({bookmarked : false})
-    const [bookmarked,setBookmarked]=useState(false);
+    const {
+        addMovieToWatchlist,
+        watchlist
+    }=useContext(GlobalContext)
+    
     const [clicked,setclicked]=useState(false);
     const {id,title,overview,poster,release,vote}=props;
     const small_title=title.length >18 ? title.substring(0,18) + "..." : title;
-    useEffect(()=>{
-        // if(localStorage.getItem(id)) setBookmarked(localStorage.getItem(id));
-        // localStorage.setItem(id,bookmarked);
-        // console.log(id,bookmarked);
-    },[bookmarked]);
-    const handleBookmarkClick=()=>{
-        setBookmarked(bookmarked=>!bookmarked);
-           
+    
+    const [playlist,setPlaylist]=useState({id: id,title:title,poster:image_api+poster,notes: ''});
+    let storedMovie=watchlist.find(obj=>obj.id === id);
+    const watchlistDisabled = storedMovie ? true : false;
+
+    const handlePlaylistClick=()=>{
+        setPlaylist(playlist);
+        addMovieToWatchlist(playlist); 
     }
+    // useEffect(()=>{
+        
+    //     console.log(playlist); 
+    // },[playlist])
     return(
         <div className="movie">
-            <BsFillPlusCircleFill
+            <button
                 className="bookmark" 
-                style={{color: bookmarked?'#4FD962': 'white'}}
-                onClick={handleBookmarkClick}
-            />
-            <FcSurvey
+                onClick={handlePlaylistClick}
+                disabled={watchlistDisabled}
+            ><BsFillPlusCircleFill 
+                    className="add"
+                    style={{color: watchlistDisabled?'#4FD962': 'white'}}
+                />
+            </button>
+            {/* <FcSurvey
                 className="pencil" 
-            />
+            /> */}
             {/* FcOk */}
             <img src={
                 poster ? (image_api+poster)
@@ -49,7 +61,7 @@ const Movie=(props)=>{
                     initial={{ opacity: 0, y: 150 }}
                     animate={{ opacity: 1,y :0 }}
                     exit={{ opacity: 0 }}
-                    transition={{duration: 0.6}}
+                    transition={{duration: 0.3}}
                 >
                 <h2>{title}</h2>
                 <h5>Release Date : {release}</h5>

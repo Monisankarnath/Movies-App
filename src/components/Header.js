@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import './header.css'
+import {Link} from 'react-router-dom';
 
 const search_api="https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
 const Header=({setMovies,setPageRequired})=>{
+    const [disableSearch,setDisableSearch] =useState(false);
     const inputRef=useRef();
     const [searchTerm,setSearchTerm] =useState('');
     const [movieSearchList,setMovieSearchList]=useState([]);
@@ -43,7 +45,14 @@ const Header=({setMovies,setPageRequired})=>{
     
     return(
         <div className="header">
-            
+            <div className="header-list">
+                <li onClick={()=>setDisableSearch(false)}>
+                    <Link to="/" className="linkA">Movviee</Link>
+                </li>
+                <li onClick={()=>setDisableSearch(true)}>
+                    <Link to="/watchlist" className="linkB">Watchlist</Link>
+                </li>
+            </div>
             <form onSubmit={handleOnSubmit}>
                 <input
                     ref={inputRef}
@@ -51,6 +60,7 @@ const Header=({setMovies,setPageRequired})=>{
                     type="text" 
                     placeholder="Search..."
                     value={searchTerm}
+                    disabled={disableSearch}
                     onChange={handleOnChange}/>
             </form>
             {searchTerm && <div className="search-list">

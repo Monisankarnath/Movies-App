@@ -2,12 +2,16 @@
 //npm i --save font-awesome
 //npm install react-icons --save
 //npm install framer-motion
+//npm install --save react-router-dom
 import React, { useEffect, useState } from 'react';
 import Movie from './components/Movie';
 import axios from 'axios';
 import Header from './components/Header';
 import {FcLeft,FcRight} from 'react-icons/fc';
+import {BrowserRouter as Router,Switch, Route} from 'react-router-dom'
 // import 'font-awesome/css/font-awesome.min.css';
+import {GlobalProvider} from './hooks/GlobalState'
+import MovieWatchlist from './components/MovieWatchlist';
 
 const App =() =>{
     
@@ -26,12 +30,15 @@ const App =() =>{
     },[page]);
     
     return(
+        <Router>
+        <GlobalProvider>
         <div className="container">
             <Header 
                 setMovies={setMovies}
                 setPageRequired={setPageRequired}
-                />
-            
+            />
+            <Switch> 
+                <Route exact path="/">
             <div className="movie-container">
                 {movies && movies.map((movie)=>
                     <Movie 
@@ -56,8 +63,15 @@ const App =() =>{
                      className="next"
                      onClick={()=>setPage(page=>page+1)}
                 />
-            </div>}  
+            </div>} 
+            </Route>
+            <Route path="/watchlist">
+                <MovieWatchlist/>
+            </Route>
+            </Switch>  
         </div>
+        </GlobalProvider>
+        </Router>
     )
 }
 export default App;
