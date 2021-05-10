@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './movie.css'
 // import { RiBookmarkFill } from 'react-icons/ri';
 import {BsFillPlusCircleFill} from 'react-icons/bs';
-import {FcSurvey} from 'react-icons/fc';
+// import {FcSurvey} from 'react-icons/fc';
 import { motion, AnimatePresence } from "framer-motion"
 import { GlobalContext } from '../hooks/GlobalState';
 
@@ -25,10 +25,6 @@ const Movie=(props)=>{
         setPlaylist(playlist);
         addMovieToWatchlist(playlist); 
     }
-    // useEffect(()=>{
-        
-    //     console.log(playlist); 
-    // },[playlist])
     return(
         <div className="movie">
             <button
@@ -40,10 +36,6 @@ const Movie=(props)=>{
                     style={{color: watchlistDisabled?'#4FD962': 'white'}}
                 />
             </button>
-            {/* <FcSurvey
-                className="pencil" 
-            /> */}
-            {/* FcOk */}
             <img src={
                 poster ? (image_api+poster)
                 : 'https://images.unsplash.com/photo-1592912789156-19ac72bec0d9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80'

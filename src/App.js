@@ -9,12 +9,12 @@ import axios from 'axios';
 import Header from './components/Header';
 import {FcLeft,FcRight} from 'react-icons/fc';
 import {BrowserRouter as Router,Switch, Route} from 'react-router-dom'
-// import 'font-awesome/css/font-awesome.min.css';
+import 'font-awesome/css/font-awesome.min.css';//not using
 import {GlobalProvider} from './hooks/GlobalState'
 import MovieWatchlist from './components/MovieWatchlist';
 
 const App =() =>{
-    
+    const [pageHeader, setPageHeader] = useState('Popular Movies');
     const [page,setPage]=useState(1);
     const [pageRequired,setPageRequired]=useState(true);
     const [movies,setMovies]=useState([]);
@@ -27,8 +27,20 @@ const App =() =>{
             // console.log(movieArray);
         }).catch((error)=>console.log('Error Occurred : ',error));
         setPageRequired(true);
+        setPageHeader('Popular Movies')
     },[page]);
-    
+    const clearHandler=()=>{
+        setPage(1);
+        const featured=`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${page}`;
+        axios.get(featured)
+            .then(({data})=>{
+            const movieArray=data.results;
+            setMovies(movieArray);
+            // console.log(movieArray);
+        }).catch((error)=>console.log('Error Occurred : ',error));
+        setPageRequired(true);
+        setPageHeader('Popular Movies');
+    }
     return(
         <Router>
         <GlobalProvider>
@@ -36,9 +48,17 @@ const App =() =>{
             <Header 
                 setMovies={setMovies}
                 setPageRequired={setPageRequired}
+                setPage={setPage}
+                setPageHeader={setPageHeader}
             />
             <Switch> 
                 <Route exact path="/">
+                    <div className="page-head-con">
+                        <div className="page-header">
+                            <h2>{pageHeader}</h2> 
+                            <button onClick={clearHandler}>Clear</button>
+                        </div>
+                    </div>
             <div className="movie-container">
                 {movies && movies.map((movie)=>
                     <Movie 

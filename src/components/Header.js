@@ -5,13 +5,15 @@ import {Link} from 'react-router-dom';
 
 const search_api="https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
-const Header=({setMovies,setPageRequired})=>{
+const Header=({setMovies,setPageRequired, setPageHeader,setPage})=>{
     const [disableSearch,setDisableSearch] =useState(false);
     const inputRef=useRef();
     const [searchTerm,setSearchTerm] =useState('');
     const [movieSearchList,setMovieSearchList]=useState([]);
+
     const handleOnChange=async (e)=>{
         setSearchTerm(e.target.value);
+        
         if(e.target.value === '') setMovieSearchList([]);
         let movieList=[];
         await axios.get(search_api+searchTerm)
@@ -24,7 +26,8 @@ const Header=({setMovies,setPageRequired})=>{
                     setMovieSearchList(movieList);
                 }
             });
-            console.log(movieSearchList)
+            // console.log(movieSearchList)
+
         }).catch((err)=>console.log("error occurred",err));
     }
     const handleOnSubmit=(e)=>{
@@ -34,6 +37,7 @@ const Header=({setMovies,setPageRequired})=>{
             const movieArray=data.results;
             setMovies(movieArray);
         });
+        setPageHeader(searchTerm);
         setPageRequired(false);
         setSearchTerm('')
     }
