@@ -88,7 +88,9 @@ const App =() =>{
             <Route exact path="/watchlist">
                 <MovieWatchlist/>
             </Route>
-            <Redirect to="/"/>
+            <Route path="/*">
+                <Redirect to="/"/>
+            </Route>
             </Switch>  
         </div>
         </GlobalProvider>
