@@ -8,7 +8,7 @@ import Movie from './components/Movie';
 import axios from 'axios';
 import Header from './components/Header';
 import {FcLeft,FcRight} from 'react-icons/fc';
-import {BrowserRouter as Router,Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router,Switch, Route, Redirect} from 'react-router-dom'
 import 'font-awesome/css/font-awesome.min.css';//not using
 import {GlobalProvider} from './hooks/GlobalState'
 import MovieWatchlist from './components/MovieWatchlist';
@@ -85,9 +85,10 @@ const App =() =>{
                 />
             </div>} 
             </Route>
-            <Route path="/watchlist">
+            <Route exact path="/watchlist">
                 <MovieWatchlist/>
             </Route>
+            <Redirect to="/"/>
             </Switch>  
         </div>
         </GlobalProvider>
